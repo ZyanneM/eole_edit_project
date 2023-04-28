@@ -18,8 +18,14 @@ function App() {
             </div>
         </header>
         <p>Discover our fantastic tool for easy video upload 🎥</p>
-          <Upload/>
-          <VideosList/>
+        <div className='sections'>
+            <div className='upload-section'>
+              <Upload/>
+            </div>
+            <div className='videogallery-section'>
+              <VideosList/>
+            </div>
+          </div>
         </div>
 
   )

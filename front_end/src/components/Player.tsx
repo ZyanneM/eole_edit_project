@@ -1,6 +1,8 @@
 import React , {useState, useEffect, useRef} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -21,8 +23,6 @@ function handlePlay() {
   if(videoRef.current){
     console.log('play');
     videoRef.current.play();
-
-    // videoRef.current.load()
 }
 
 
@@ -34,9 +34,9 @@ function handlePause() {
   if(videoRef.current){
     console.log('pause');
     videoRef.current.pause();
-
-    // videoRef.current.load()
 }
+
+
 
 
 }
@@ -46,14 +46,14 @@ function handlePause() {
                 { filename && 
                 <>
                 <div className='video-container'>
-                  <video ref={videoRef} id="video-player" muted="muted" loop="loop" playsInline="playsinline" preload="metadata" data-aos="fade-up" autoPlay width="480" height="auto">
+                  <video ref={videoRef} id="video-player" preload="metadata" data-aos="fade-up" autoPlay width="480" height="auto">
                       <source src={`http://localhost:3000/files/${filename}`} type="video/mp4" />
                   </video>
                 </div>
                 {isPlaying ?
-                <button onClick={() => handlePause()}>Pause</button>
-                : <button onClick={() => handlePlay()}>Play</button>}
-                <button type="button" className="btn-close btn-close-white" aria-label="Close"></button>
+                <><button onClick={() => handlePause()} className='icon' ><FontAwesomeIcon icon={faPause} className='icon-pause' /></button>
+                </>
+                : <button onClick={() => handlePlay()} className='icon'><FontAwesomeIcon icon={faPlay} className='icon-play' /></button>}
                 </>
                 }
         </>

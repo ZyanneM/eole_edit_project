@@ -106,7 +106,7 @@ export default class Upload extends React.Component<any, UploadState> {
       {this.state.isUploaded ? (
         <Toast title="Congratulations 🎉" content="File Upload Successfully" type="success" />
       ) : null}
-        
+        <h1 className='upload-title'>💾 Upload your file</h1>
         <form className="upload-form">
           <input
             id="file-input"
@@ -130,7 +130,6 @@ export default class Upload extends React.Component<any, UploadState> {
           </button>
         </form>
 
-        {/* {this.state.message} */}
       </div>
 
     );

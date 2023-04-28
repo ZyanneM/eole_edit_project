@@ -28,6 +28,24 @@ header h1 span{
   color: #0BA5D8;
 }
 
+.sections{
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-section{
+  margin-top: 10vh;
+  width: 40vw;
+}
+
+.videogallery-section{
+  width: 40vw;
+  margin-top: 10vh;
+}
+
 .upload-btn{
   margin-top: 3rem;
   margin-bottom: 3rem;
@@ -103,15 +121,31 @@ header h1 span{
   min-height: 40px;
 }
 
+.video-buttons{
+  margin-top: 3rem;
+  width: 40vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
 .single-video-btn{
-  max-width: 250px;
-  font-size: 1.5rem;
+  max-width: 400px;
+  font-size: 1.3rem;
   text-align: center;
   background-color: #0BA5D8;
   color: rgb(255, 255, 255);
-  padding: 1 1.5rem;
-  margin: 2rem;
+  padding: 0.5 1rem;
+  margin: 0.8rem;
+}
+
+.video-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 7rem;
 }
 
 #video-player{
@@ -124,20 +158,34 @@ header h1 span{
 .btn-close{
   position: absolute;
 display: flex;
-top: 18vh;
+top: 34vh;
 left: 63vw;
 z-index: 6;
 }
 
+.icon-play, .icon-pause{
+  font-size: 3rem;
+}
+
+.icon{
+  position: absolute;
+  top: 83vh;
+  left: 49vw;
+}
 
 .video-container{
-width: 30vw;
+width: 32vw;
 height: auto;
 position: absolute;
 display: flex;
-top: 17vh;
-left: 36vw;
+top: 30vh;
+left: 35vw;
+border-radius: 24px;
+background-color: transparent;
 z-index: 5;
+-webkit-box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.75);
 }
 
 .bounce-in-top {
