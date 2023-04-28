@@ -13,14 +13,14 @@ app.use(cors());
 
 app.use(express.static(__dirname + '/public'));
 
-// Autoriser l'accès à uploads/processed
+
 app.use('/uploads/processed', express.static(__dirname + '/uploads/processed'));
 
 interface FileRequest extends Request {
   file: Express.Multer.File;
 }
 
-// configuration de Multer pour stocker les fichiers dans le dossier ./uploads
+
 const storage = multer.diskStorage({
     destination: function (req: express.Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, file: Express.Multer.File, cb: any) {
       cb(null, 'uploads/');
@@ -33,15 +33,15 @@ const storage = multer.diskStorage({
 
 const upload: Multer = multer({ storage: storage });
 
-// servir les fichiers statiques à partir du dossier ./build
+
 app.use(express.static(path.join(__dirname, 'build')));
 
-// gérer les demandes pour la page d'accueil
+// Home router
 app.get('/', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// gérer la soumission du formulaire
+// Upload Submit Route
 app.post('/upload', upload.single('fileToUpload'), (req: Request, res: Response) => {
   if (!req.file) {
     return res.send('Aucun fichier n\'a été sélectionné.');
@@ -53,13 +53,13 @@ app.post('/upload', upload.single('fileToUpload'), (req: Request, res: Response)
   const targetDir = path.join(__dirname, '..', 'uploads', 'processed');
   const targetPath = path.join(targetDir, fileName);
 
-  // Crée le dossier cible s'il n'existe pas déjà
+  // Create target directory if it doesn't exist
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir);
   }
 
   
-  // conversion de la vidéo en basse résolution
+  // Video conversion with ffmpeg
   ffmpeg(filePath)
     .outputOptions('-flags:v +ildct+ilme')
     .videoCodec('libx264')
@@ -69,28 +69,28 @@ app.post('/upload', upload.single('fileToUpload'), (req: Request, res: Response)
     .outputOptions('-r 30')
     .output(targetPath)
     .on('end', () => {
-      // Supprime le fichier original une fois la conversion terminée
+      
       fs.unlink(filePath, () => {
-        res.send('Le fichier a été téléchargé avec succès.');
+        res.send('File upload successfully');
       });
     })
     .on('error', (err) => {
       console.error(err);
-      res.status(500).send('Une erreur est survenue lors de la conversion du fichier.');
+      res.status(500).send('Fail Upload');
     })
     .run();
 });
 
 app.get('/files', (req: Request, res: Response) => {
   const videosPath = path.join(__dirname, '..', 'uploads', 'processed');
-  console.log('Chemin des vidéos:', videosPath);
+  console.log('Videos Path:', videosPath);
   fs.readdir(videosPath, (err, files) => {
     if (err) {
       console.error(err);
       res.sendStatus(500);
       return;
     }
-     console.log('Fichiers récupérés:', files);
+     console.log('Files:', files);
     const videoFiles = files.filter((file) => {
       const fileExtension = path.extname(file).toLowerCase();
       return fileExtension === '.mp4' || fileExtension === '.avi' || fileExtension === '.mov';
@@ -129,7 +129,7 @@ app.get('/files/:filename', (req, res) => {
   }
 });
 
-// démarrer le serveur
+
 app.listen(port, () => {
   console.log(`My Eole project start on port ${port}`)
 })
