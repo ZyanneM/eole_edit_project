@@ -55,7 +55,7 @@ header h1 span{
 }
 
 .files-title{
-  /* color: #0BA5D8; */
+  margin-bottom: 2rem;
 }
 
 .toast-container{
@@ -101,6 +101,43 @@ header h1 span{
 
 .file-name{
   min-height: 40px;
+}
+
+
+.single-video-btn{
+  max-width: 250px;
+  font-size: 1.5rem;
+  text-align: center;
+  background-color: #0BA5D8;
+  color: rgb(255, 255, 255);
+  padding: 1 1.5rem;
+  margin: 2rem;
+}
+
+#video-player{
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 24px;
+}
+
+.btn-close{
+  position: absolute;
+display: flex;
+top: 18vh;
+left: 63vw;
+z-index: 6;
+}
+
+
+.video-container{
+width: 30vw;
+height: auto;
+position: absolute;
+display: flex;
+top: 17vh;
+left: 36vw;
+z-index: 5;
 }
 
 .bounce-in-top {
