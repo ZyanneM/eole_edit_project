@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
       const ext = path.extname(file.originalname);
-      cb(null, `${file.fieldname}-${Date.now()}${ext}`);
+      cb(null, `${file.originalname}`);
     },
 });
 
@@ -58,6 +58,7 @@ app.post('/upload', upload.single('fileToUpload'), (req: Request, res: Response)
     fs.mkdirSync(targetDir);
   }
 
+  
   // conversion de la vidéo en basse résolution
   ffmpeg(filePath)
     .outputOptions('-flags:v +ildct+ilme')
@@ -98,8 +99,8 @@ app.get('/files', (req: Request, res: Response) => {
   });
 });
 
-app.get('/uploads/processed/:filename', (req, res) => {
-  const filePath = path.join(__dirname, 'uploads', 'processed', req.params.filename);
+app.get('/files/:filename', (req, res) => {
+  const filePath = path.join(__dirname, '..' ,'uploads', 'processed', req.params.filename);
   const stat = fs.statSync(filePath);
   const fileSize = stat.size;
   const range = req.headers.range;

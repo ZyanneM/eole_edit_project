@@ -22,7 +22,7 @@ const storage = multer_1.default.diskStorage({
     },
     filename: function (req, file, cb) {
         const ext = path_1.default.extname(file.originalname);
-        cb(null, `${file.fieldname}-${Date.now()}${ext}`);
+        cb(null, `${file.originalname}`);
     },
 });
 const upload = (0, multer_1.default)({ storage: storage });
@@ -83,35 +83,35 @@ app.get('/files', (req, res) => {
         res.json(videoFiles);
     });
 });
-// app.get('/files/:filename', (req: Request, res: Response) => {
-//   const videosPath = path.join(__dirname, '..', 'uploads', 'processed');
-//   const filename = req.params.filename;
-//   const file = path.join(videosPath, filename);
-//   const stat = fs.statSync(file);
-//   const range = req.headers.range;
-//   if (range) {
-//     const parts = range.replace(/bytes=/, '').split('-');
-//     const start = parseInt(parts[0], 10);
-//     const end = parts[1] ? parseInt(parts[1], 10) : stat.size - 1;
-//     const chunksize = end - start + 1;
-//     const fileStream = fs.createReadStream(file, { start, end });
-//     const head = {
-//       'Content-Range': `bytes ${start}-${end}/${stat.size}`,
-//       'Accept-Ranges': 'bytes',
-//       'Content-Length': chunksize,
-//       'Content-Type': 'video/mp4',
-//     };
-//     res.writeHead(206, head);
-//     fileStream.pipe(res);
-//   } else {
-//     const head = {
-//       'Content-Length': stat.size,
-//       'Content-Type': 'video/mp4',
-//     };
-//     res.writeHead(200, head);
-//     fs.createReadStream(file).pipe(res);
-//   }
-// });
+app.get('/files/:filename', (req, res) => {
+    const filePath = path_1.default.join(__dirname, '..', 'uploads', 'processed', req.params.filename);
+    const stat = fs_1.default.statSync(filePath);
+    const fileSize = stat.size;
+    const range = req.headers.range;
+    if (range) {
+        const parts = range.replace(/bytes=/, "").split("-");
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+        const chunksize = end - start + 1;
+        const file = fs_1.default.createReadStream(filePath, { start, end });
+        const head = {
+            "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+            "Accept-Ranges": "bytes",
+            "Content-Length": chunksize,
+            "Content-Type": "video/mp4",
+        };
+        res.writeHead(206, head);
+        file.pipe(res);
+    }
+    else {
+        const head = {
+            "Content-Length": fileSize,
+            "Content-Type": "video/mp4",
+        };
+        res.writeHead(200, head);
+        fs_1.default.createReadStream(filePath).pipe(res);
+    }
+});
 // démarrer le serveur
 app.listen(port, () => {
     console.log(`My Eole project start on port ${port}`);
