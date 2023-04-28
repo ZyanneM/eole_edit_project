@@ -66,7 +66,6 @@ export default class Upload extends React.Component<any, UploadState> {
         },
       });
       console.log(response.data);
-      alert('File uploaded');
       this.setState({ isUploaded: true });
       if (fileNameSpan) {
         fileNameSpan.innerText = "";
