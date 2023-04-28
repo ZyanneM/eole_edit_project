@@ -309,3 +309,14 @@ box-shadow: 10px 10px 36px 0px rgba(0,0,0,0.75);
             animation-timing-function: ease-out;
   }
 }
+
+
+@media screen and (max-width: 1300px) {
+  .sections{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
